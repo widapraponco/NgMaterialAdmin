@@ -1,0 +1,15 @@
+@use '~@angular/material' as mat;
+
+$my-palette: mat.define-palette(mat.$indigo-palette);
+
+.my-custom-darker-style {
+ background: mat.get-color-from-palette($my-palette, 'darker');
+ color: mat.get-color-from-palette($my-palette, 'darker-contrast');
+}
+
+.background-primary {
+    display: block; 
+    width: 100%; 
+    height: 30%;
+    background: mat.get-color-from-palette($my-palette, 'default');
+}
