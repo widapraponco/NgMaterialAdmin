@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Hi {{data.title}}</h1>
+<ng-container *ngTemplateOutlet="type"></ng-container>
+
+<ng-template #confirm>
+    <div mat-dialog-content>
+        test
+        {{data.description}}
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #base>
+    <div mat-dialog-content>
+        base
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>Ok</button>
+    </div>
+</ng-template>

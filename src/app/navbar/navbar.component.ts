@@ -22,8 +22,8 @@ const TREE_DATA: FoodNode[] = [
     name: 'Fruit',
     icon: 'check_circle',
     children: [
-      {name: 'Apple', link: '/table'},
-      {name: 'Banana', link: '/table'},
+      {name: 'Apple', link: '/form'},
+      {name: 'Banana', link: '/form'},
       {name: 'Fruit loops', link: '/table'},
     ]
   }, {

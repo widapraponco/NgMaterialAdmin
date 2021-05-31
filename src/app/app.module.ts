@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +22,14 @@ import { TreeComponent } from './components/tree/tree.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { DragDropComponent } from './components/drag-drop/drag-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormComponent } from './pages/form/form.component';
+import { KleponModule } from 'src/helpers/form/klepon.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgxValidateCoreModule } from '@ngx-validate/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { ConfirmationDialog } from './components/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -31,12 +38,23 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DashboardComponent,
     TableComponent,
     TreeComponent,
-    DragDropComponent
+    DragDropComponent,
+    FormComponent,
+    ConfirmationDialog,
+    // BaseDialog,
+
+    // DynamicFieldDirective,
+    // DynamicFormComponent
   ],
   imports: [
-    BrowserModule,
+    KleponModule,
+    // FormsModule,
+    // ReactiveFormsModule,
+
+    // BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
+    MatDialogModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -50,7 +68,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatPaginatorModule,
     MatSortModule,
     MatTreeModule,
-    DragDropModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    DragDropModule,
+    NgxValidateCoreModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

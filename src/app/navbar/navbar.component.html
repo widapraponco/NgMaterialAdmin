@@ -4,26 +4,35 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <!-- <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
-    </mat-nav-list> -->
+    <mat-nav-list *ngIf="isHandset$ | async">
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1em 0;">
+        <img width="120" src="https://ui-avatars.com/api/?name=John+Doe" style="border-radius: 100%; margin: 1em;"/>
+        <span>Nama User</span>
+      </div>
+      <a mat-list-item href="#">
+        <mat-icon>markunread</mat-icon> <span style="margin-left: 1em;">Pesan</span>
+      </a>
+      <a mat-list-item href="#">
+        <mat-icon>notifications</mat-icon> <span style="margin-left: 1em;">Pengumuman</span>
+      </a>
+      <!-- <a mat-list-item href="#">Link 3</a> -->
+    </mat-nav-list>
+    <mat-divider></mat-divider>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button disabled>
+        <button mat-icon-button color>
           <mat-icon class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
         </button>
-        <a mat-list-item href="#" [routerLink]="node.link">{{node.name}}</a>
+        <a mat-list-item href="#" [routerLink]="node.link" style="text-decoration: none;">{{node.name}}</a>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-        <button mat-icon-button disabled>
+        <button mat-icon-button color>
           <mat-icon class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
         </button>
-        <a mat-list-item href="#" matTreeNodeToggle style="flex: 1;" [routerLink]="node.link">{{node.name}}</a>
+        <a mat-list-item href="javascript:void(0)" matTreeNodeToggle style="flex: 1; text-decoration: none; color: black;">{{node.name}}</a>
         <button mat-icon-button matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.name">
           <mat-icon class="mat-icon-rtl-mirror">
@@ -32,6 +41,10 @@
         </button>
       </mat-tree-node>
     </mat-tree>
+    <mat-toolbar style="font-size: 1rem;
+    word-spacing: 10px; position: sticky; top: 100%; display: flex; justify-content: center; align-items: center; min-width: 50px;">
+      by klepon.tech
+    </mat-toolbar>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -45,23 +58,25 @@
       </button>
       <span>AngularAdminUI</span>
       <span style="flex: 1;"></span>
-      <span style="margin: 0 .1em">
-        <button mat-icon-button><mat-icon>markunread</mat-icon></button>
-      </span>
-      <span style="margin: 0 1em 0 .1em">
-        <button mat-icon-button><mat-icon>notifications</mat-icon></button>
-      </span>
-      <span style="height: 30px; border-left: solid 1px #ffffff;"></span>
-      <span>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <img width="34" src="https://ui-avatars.com/api/?name=John+Doe" style="border-radius: 50px; margin: .2em 1em;"/>
-          Nama User
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>Item 1</button>
-          <button mat-menu-item>Item 2</button>
-        </mat-menu>
-      </span>
+      <ng-container *ngIf="!(isHandset$ | async)">
+        <span style="margin: 0 .1em">
+          <button mat-icon-button><mat-icon>markunread</mat-icon></button>
+        </span>
+        <span style="margin: 0 1em 0 .1em">
+          <button mat-icon-button><mat-icon>notifications</mat-icon></button>
+        </span>
+        <span style="height: 30px; border-left: solid 1px #ffffff;"></span>
+        <span>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <img width="34" src="https://ui-avatars.com/api/?name=John+Doe" style="border-radius: 50px; margin: .2em 1em;"/>
+            Nama User
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu>
+        </span>
+      </ng-container>
     </mat-toolbar>
     <!-- Add Content Here -->
     <!-- <div style="position: absolute; z-index: 0; width: 100%; height: 100%;"> -->
