@@ -20,19 +20,15 @@
     <mat-divider></mat-divider>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for leaf nodes -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <mat-tree-node [ngClass]="isActive == node.link.toLowerCase() ? 'menu-active' : 'menu'" [routerLink]="node.link" *matTreeNodeDef="let node" matTreeNodePadding>
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button color>
-          <mat-icon class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
-        </button>
-        <a mat-list-item href="#" [routerLink]="node.link" style="text-decoration: none;">{{node.name}}</a>
+        <mat-icon style="margin: 0 1em;" class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
+        <a mat-list-item href="javascript:void(0)" style="text-decoration: none;">{{node.name}}</a>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
-      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-        <button mat-icon-button color>
-          <mat-icon class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
-        </button>
-        <a mat-list-item href="javascript:void(0)" matTreeNodeToggle style="flex: 1; text-decoration: none; color: black;">{{node.name}}</a>
+      <mat-tree-node [ngClass]="isActive == node.name.toLowerCase() ? 'menu-active' : 'menu'" matTreeNodeToggle *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <mat-icon style="margin: 0 1em;" class="mat-icon-rtl-mirror">{{node.icon}}</mat-icon>
+        <a mat-list-item href="javascript:void(0)" style="flex: 1; text-decoration: none;">{{node.name}}</a>
         <button mat-icon-button matTreeNodeToggle
                 [attr.aria-label]="'Toggle ' + node.name">
           <mat-icon class="mat-icon-rtl-mirror">
@@ -56,7 +52,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>AngularAdminUI</span>
+      <!-- <span>Control Admin Panel</span> -->
       <span style="flex: 1;"></span>
       <ng-container *ngIf="!(isHandset$ | async)">
         <span style="margin: 0 .1em">
@@ -72,8 +68,8 @@
             Nama User
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
+            <button mat-menu-item>Profilku</button>
+            <button mat-menu-item routerLink="/account/login">Keluar</button>
           </mat-menu>
         </span>
       </ng-container>

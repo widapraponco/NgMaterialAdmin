@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import {BaseComponent} from '../components/BaseComponent';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { debounceTime, first, take } from 'rxjs/operators';
 
 interface FoodNode {
   name: string;
@@ -16,35 +18,50 @@ const TREE_DATA: FoodNode[] = [
   {
     name: 'Dashboard',
     icon: 'dashboard',
-    link: '/'
+    link: '/dashboard'
   },
   {
-    name: 'Fruit',
-    icon: 'check_circle',
+    name: 'Penarikan',
+    icon: 'paid',
+    link: '/penarikan'
+  },
+  {
+    name: 'Pendanaan',
+    icon: 'how_to_vote',
+    link: '/pendanaan'
+  },
+  {
+    name: 'Penjualan',
+    icon: 'storefront',
+    link: '/penjualan'
+  },
+  {
+    name: 'Riwayat',
+    icon: 'restore',
     children: [
-      {name: 'Apple', link: '/form'},
-      {name: 'Banana', link: '/form'},
-      {name: 'Fruit loops', link: '/table'},
-    ]
-  }, {
-    name: 'Vegetables',
-    icon: 'check_circle',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          {name: 'Broccoli', link: '/table'},
-          {name: 'Brussels sprouts', link: '/table'},
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          {name: 'Pumpkins', link: '/table'},
-          {name: 'Carrots', link: '/table'},
-        ]
-      },
+      {name: 'Penarikan', link: '/riwayat/penarikan'},
+      {name: 'Pendanaan', link: '/riwayat/pendanaan'}
     ]
   },
+  // {
+  //   name: 'Vegetables',
+  //   icon: 'check_circle',
+  //   children: [
+  //     {
+  //       name: 'Green',
+  //       children: [
+  //         {name: 'Broccoli', link: '/table'},
+  //         {name: 'Brussels sprouts', link: '/table'},
+  //       ]
+  //     }, {
+  //       name: 'Orange',
+  //       children: [
+  //         {name: 'Pumpkins', link: '/table'},
+  //         {name: 'Carrots', link: '/table'},
+  //       ]
+  //     },
+  //   ]
+  // },
 ];
 
 /** Flat node with expandable and level information */
@@ -61,13 +78,9 @@ interface ExampleFlatNode {
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent extends BaseComponent {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+    isActive = "dashboard";
 
     private _transformer = (node: FoodNode, level: number) => {
       return {
@@ -89,8 +102,17 @@ export class NavbarComponent {
   
     hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(injector: Injector, private b: BreakpointObserver, private router: Router) {
+    super(injector, b);
     this.dataSource.data = TREE_DATA;
+
+    router.events.subscribe(e => {
+      console.log(e);
+      if (e instanceof NavigationEnd && e) {
+        this.isActive = e.url;
+        console.log(this.isActive);
+      }
+    })
   }
 
 }
