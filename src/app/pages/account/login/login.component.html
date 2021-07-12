@@ -1,0 +1,19 @@
+<div class="flex-middle" style="width: 100vw; height: 100vh; justify-content: center;">
+    <mat-card style="max-width: 300px;">
+        <mat-card-content>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <span matPrefix><mat-icon>person</mat-icon></span>
+                    <input name="username" ngModel type="text" matInput required>
+                </mat-form-field>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <span matPrefix><mat-icon>lock</mat-icon></span>
+                    <input name="password" ngModel type="password" matInput required>
+                </mat-form-field>
+                <button style="width: 100%;" type="submit" mat-raised-button color="primary">Login</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -23,7 +23,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { DragDropComponent } from './components/drag-drop/drag-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormComponent } from './pages/form/form.component';
-import { KleponModule } from 'src/helpers/form/klepon.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
@@ -47,7 +46,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     // DynamicFormComponent
   ],
   imports: [
-    KleponModule,
     // FormsModule,
     // ReactiveFormsModule,
 

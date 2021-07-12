@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "properti-b46d7": {
+      "hosting": {
+        "ControlPanel": [
+          "properti-b46d7"
+        ]
+      }
+    }
+  }
+}

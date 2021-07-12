@@ -1,0 +1,129 @@
+<div class="container">
+    <div class="wrapper">
+        <div class="form-container" [ngStyle]="{'flex': (!(isHandset$ | async) ? 0.7 : 1)}">
+            <h1 class="mat-h1">Buat Proyek Baru</h1>
+            <form (ngSubmit)="onSubmit()" [formGroup]="group">
+                <img-upload [group]="group" (onChange)="fileChange($event)"></img-upload>
+                <mat-form-field style="width: 30%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                      <mat-option *ngFor="let stat of status" [value]="stat.value">
+                        {{stat.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="width: 36%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Kode Proyek</mat-label>
+                    <input matInput type="text" placeholder="Kode Proyek" formControlName="kode_proyek" />
+                </mat-form-field>
+                <mat-form-field style="width: 30%;" appearance="fill">
+                    <mat-label>Batas Waktu</mat-label>
+                    <input matInput type="text" placeholder="Batas Waktu" formControlName="batas_waktu" />
+                    <span matSuffix>Hari</span>
+                </mat-form-field>
+                <mat-form-field style="width: 100%;" appearance="fill">
+                    <mat-label>Judul</mat-label>
+                    <input matInput type="text" placeholder="Judul" formControlName="title" />
+                </mat-form-field>
+                <mat-form-field style="width: 100%;" appearance="fill">
+                    <mat-label>Alamat</mat-label>
+                    <span matPrefix><mat-icon>place</mat-icon></span>
+                    <input matInput type="text" placeholder="Jl. Mangga IX No. 2 Surabaya" formControlName="lokasi" />
+                </mat-form-field>
+                <mat-form-field style="width: 49%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Longitude</mat-label>
+                    <input matInput type="number" placeholder="9.9992392" formControlName="longitude" />
+                </mat-form-field>
+                <mat-form-field style="width: 49%;" appearance="fill">
+                    <mat-label>Latitude</mat-label>
+                    <input matInput type="number" placeholder="113.9992392" formControlName="latitude" />
+                </mat-form-field>
+                <mat-form-field style="width: 30%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Alih Guna</mat-label>
+                    <mat-select formControlName="alih_guna">
+                      <mat-option *ngFor="let type of types" [value]="type.value">
+                        {{type.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="width: 68%;" appearance="fill">
+                    <mat-label>Biaya Proyek</mat-label>
+                    <span matPrefix>Rp &nbsp;</span>
+                    <input matInput type="number" placeholder="1.000.000.000" formControlName="biaya" />
+                </mat-form-field>
+                <mat-form-field style="width: 68%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Harga Per Lot</mat-label>
+                    <span matPrefix>Rp &nbsp;</span>
+                    <input matInput type="text" placeholder="1.000.000" formControlName="harga_per_lot" />
+                </mat-form-field>
+                <mat-form-field style="width: 30%;" appearance="fill">
+                    <mat-label>Jumlah Lot</mat-label>
+                    <input matInput type="number" placeholder="1000" formControlName="jumlah_lot" />
+                    <span matSuffix>Lot</span>
+                </mat-form-field>
+                <mat-form-field style="width: 40%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Periode Deviden</mat-label>
+                    <input matInput type="number" placeholder="3" formControlName="periode_deviden" />
+                    <span matSuffix>Bulan</span>
+                </mat-form-field>
+                <mat-form-field style="width: 28%; margin-right: 2%;" appearance="fill">
+                    <mat-label>Estimasi Min</mat-label>
+                    <input matInput type="number" placeholder="1000" formControlName="estimasi_deviden_min" />
+                    <span matSuffix>%</span>
+                </mat-form-field>
+                <mat-form-field style="width: 28%;" appearance="fill">
+                    <mat-label>Estimasi Max</mat-label>
+                    <input matInput type="number" placeholder="1000" formControlName="estimasi_deviden_max" />
+                    <span matSuffix>%</span>
+                </mat-form-field>
+                Deskripsi
+                <ckeditor [editor]="Editor" [(ngModel)]="editorData" [ngModelOptions]="{standalone: true}" style="margin-bottom: 10px; display: block;"></ckeditor>
+                <button mat-raised-button color="primary" style="float: right;">Simpan</button>
+            </form>
+        </div>
+        <div class="preview" *ngIf="!(isHandset$ | async)">
+            <h1 class="mat-h1">Preview</h1>
+            <mat-card>
+                <mat-card-content class="dashboard-card-content" style="font-size: 12px;">
+                    <div style="height: 150px; padding-bottom: 1.34375em; position: relative; margin-right: -16px; margin-left: -16px; margin-top: -16px;">
+                        <div #image class="img-container"></div>
+                        <mat-chip-list aria-label="Status" style="position: absolute; bottom: 0; right: 10px;">
+                            <mat-chip style="font-size: 12px;" color="accent" selected>{{group.get('status')?.value || 'Status'}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <span class="mat-h6">{{group.get('kode_proyek')?.value || 'Kode Proyek'}}</span>
+                    <h4 class="mat-h4" style="margin-bottom: 10px">{{group.get('title')?.value || 'Judul Proyek'}}</h4>
+                    <mat-chip-list aria-label="Alih Guna">
+                        <mat-chip style="font-size: 12px;" color="primary" selected>{{group.get('alih_guna')?.value || 'Alih Guna Proyek'}}</mat-chip>
+                    </mat-chip-list>                        
+                    <span class="flex-middle" style="font-size: 12px; margin-bottom: 10px"><mat-icon>place</mat-icon> {{group.get('lokasi')?.value || 'Lokasi proyek'}}</span>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Rp {{ (group.get('biaya')?.value || '100000') | digit}}</span>
+                        <span>{{group.get('batas_waktu')?.value || ''}} hari</span>
+                    </div>
+                    <mat-progress-bar mode="determinate" value="40" style="margin-bottom: 10px;"></mat-progress-bar>
+                    <div style="display: flex;">
+                        <div style="width: 49%; margin-right: 2%">
+                            <span>Harga Per Lot</span>
+                            <h4>Rp {{ (group.get('harga_per_lot')?.value || '1000000') | digit}}</h4>
+                        </div>
+                        <div style="width: 49%;">
+                            <span>Jumlah Lot</span>
+                            <h4>{{ (group.get('jumlah_lot')?.value || '900') }}</h4>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="width: 49%; margin-right: 2%">
+                            <span class="flex-middle" style="font-size: 12px;"><mat-icon color="primary">schedule</mat-icon> Periode Deviden</span>
+                            <h4>{{ (group.get('periode_deviden')?.value || '3') | digit}} Bulan</h4>
+                        </div>
+                        <div style="width: 49%;">
+                            <span class="flex-middle" style="font-size: 12px;"><mat-icon color="primary">schedule</mat-icon> Estimasi Deviden</span>
+                            <h4>{{ (group.get('estimasi_deviden_min')?.value || '0') }} - {{ (group.get('estimasi_deviden_max')?.value || '0') }}% per tahun</h4>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

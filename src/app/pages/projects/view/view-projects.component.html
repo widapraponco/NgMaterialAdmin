@@ -1,0 +1,14 @@
+<div class="grid-container">
+  <div style="display: flex; align-items: center;">
+    <button mat-icon-button routerLink="/project"><mat-icon>keyboard_backspace</mat-icon></button>
+    <span class="mat-h1" style="margin: 0;">{{title}}</span>
+  </div>
+    <mat-grid-list [cols]="maxcols" rowHeight="400px">
+      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+        <ng-container
+            dynamic-content
+            [config]="card.content"
+        ></ng-container>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>
